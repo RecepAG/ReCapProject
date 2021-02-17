@@ -3,6 +3,7 @@ using Entities.Concrete;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 
 namespace DataAccess.Concrete.InMemory
@@ -13,11 +14,11 @@ namespace DataAccess.Concrete.InMemory
         public InMemoryCarDal()
         {
             _cars = new List<Car> {
-                new Car{CarId=1, CarBrandId=1,ColorId=1,CarModelYear="2020",DailyPrice=250,Description="Uygun Fiyatlara Kiralık Araba"},
-                new Car{CarId=2, CarBrandId=1,ColorId=3,CarModelYear="2019",DailyPrice=200,Description="Uygun Fiyatlara Kiralık Araba"},
-                new Car{CarId=3, CarBrandId=2,ColorId=3,CarModelYear="2020",DailyPrice=300,Description="Uygun Fiyatlara Kiralık Araba"},
-                new Car{CarId=4, CarBrandId=2,ColorId=2,CarModelYear="2019",DailyPrice=270,Description="Uygun Fiyatlara Kiralık Araba"},
-                new Car{CarId=5 ,CarBrandId=2,ColorId=2,CarModelYear="2019",DailyPrice=270,Description="Uygun Fiyatlara Kiralık Araba"}
+                new Car{CarId=1, BrandId=1,ColorId=1,ModelYear="2020",DailyPrice=250,Descriptions="Uygun Fiyatlara Kiralık Araba"},
+                new Car{CarId=2, BrandId=1,ColorId=3,ModelYear="2019",DailyPrice=200,Descriptions="Uygun Fiyatlara Kiralık Araba"},
+                new Car{CarId=3, BrandId=2,ColorId=3,ModelYear="2020",DailyPrice=300,Descriptions="Uygun Fiyatlara Kiralık Araba"},
+                new Car{CarId=4, BrandId=2,ColorId=2,ModelYear="2019",DailyPrice=270,Descriptions="Uygun Fiyatlara Kiralık Araba"},
+                new Car{CarId=5 ,BrandId=2,ColorId=2,ModelYear="2019",DailyPrice=270,Descriptions="Uygun Fiyatlara Kiralık Araba"}
             };
         }
 
@@ -36,30 +37,35 @@ namespace DataAccess.Concrete.InMemory
             _cars.Remove(carToDelete);
         }
 
+        public Car Get(Expression<Func<Car, bool>> filter)
+        {
+            throw new NotImplementedException();
+        }
+
         public List<Car> GetAll()
         {
             return _cars;
         }
 
-        
+        public List<Car> GetAll(Expression<Func<Car, bool>> filter = null)
+        {
+            throw new NotImplementedException();
+        }
 
         public void Update(Car car)
         {
             Car carToUpdate = null;
             carToUpdate = _cars.SingleOrDefault(c => c.CarId == car.CarId);
             carToUpdate.CarId = car.CarId;
-            carToUpdate.CarBrandId = car.CarBrandId;
+            carToUpdate.BrandId = car.BrandId;
             carToUpdate.ColorId = car.ColorId;
-            carToUpdate.DailyPrice = car.DailyPrice;
-            carToUpdate.Description = car.Description;
-            carToUpdate.CarModelYear = car.CarModelYear;
+            carToUpdate.DailyPrice=car.DailyPrice;
+            carToUpdate.Descriptions = car.Descriptions;
+            carToUpdate.ModelYear = car.ModelYear;
 
 
         }
 
-        List<Car> ICarDal.GetById(int brandId)
-        {
-            return _cars.Where(c => c.CarBrandId == brandId).ToList();
-        }
+        
     }
 }
